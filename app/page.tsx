@@ -1,4 +1,4 @@
-import { ExternalLink, Trophy } from 'lucide-react';
+import { ExternalLink, Trophy } from '@/components/static-icons';
 import {
   Table,
   TableBody,
@@ -108,7 +108,6 @@ export default function Home() {
             <div>
               <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.07] px-3 py-1.5 text-sm font-medium text-gold-light">
                 <Trophy
-                  aria-hidden="true"
                   className="h-4 w-4"
                   strokeWidth={1.8}
                 />
@@ -235,7 +234,7 @@ export default function Home() {
             className="inline-flex w-fit items-center gap-1.5 font-semibold text-forest underline decoration-gold decoration-2 underline-offset-4 transition-colors hover:text-forest/70 focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
           >
             View the simulator source
-            <ExternalLink aria-hidden="true" className="h-3.5 w-3.5" />
+            <ExternalLink className="h-3.5 w-3.5" />
           </a>
         </footer>
       </div>
