@@ -109,3 +109,12 @@ test('the client build has no application or third-party UI entry points', async
     );
   }
 });
+
+test('the static prerender bundle is independent of the optional worker runtime', async () => {
+  const serverBundle = await read('dist/server/index.js');
+  assert.doesNotMatch(
+    serverBundle,
+    /(?:from|import\()\s*["']cloudflare:/,
+    'bare-Node prerender must not import workerd-only cloudflare: modules',
+  );
+});

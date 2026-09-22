@@ -107,10 +107,7 @@ export default function Home() {
           <div className="relative grid gap-8 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
             <div>
               <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.07] px-3 py-1.5 text-sm font-medium text-gold-light">
-                <Trophy
-                  className="h-4 w-4"
-                  strokeWidth={1.8}
-                />
+                <Trophy className="h-4 w-4" strokeWidth={1.8} />
                 Best tested strategy
               </div>
               <h2

@@ -18,19 +18,19 @@ npm run dev
 Run the project checks with:
 
 ```sh
-npm run lint
-npm run typecheck
-npm run build:static
-npm run test:static
-npm audit
-npm audit --omit=dev
-npm audit signatures
+npm run check
+npm run audit:security
 ```
 
 `build:static` runs `vinext build --prerender-all --prerender-concurrency 1`.
+It intentionally omits the optional Sites/Cloudflare adapter while bare Node
+performs the prerender. This keeps workerd-only `cloudflare:` modules out of
+the static build without removing the separately tested adapter build.
 The route HTML is written to `dist/server/prerendered-routes/index.html` and
 `404.html`. The checks verify the ten complete ranking rows, both decorative
-icons, the 404 page, and the absence of application/UI-library client entries.
+icons, the 404 page, the absence of application/UI-library client entries, and
+the absence of worker-only imports in the static server bundle. The same check
+also rejects lockfiles that omit required Linux ARM64 GNU native packages.
 All page content must remain usable without JavaScript. Keep the table and
 icons as server components; do not introduce client hooks or event handlers.
 
