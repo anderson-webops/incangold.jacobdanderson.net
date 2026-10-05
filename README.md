@@ -11,7 +11,7 @@ The results come from the [Incan Gold Strategy Tester](https://github.com/Jacoba
 Use Node **24.18.1** and npm **12.0.2** (the runtime pins are committed).
 
 ```sh
-npm ci
+npm ci --ignore-scripts
 npm run dev
 ```
 
@@ -21,6 +21,12 @@ Run the project checks with:
 npm run check
 npm run audit:security
 ```
+
+The Vinext build chain uses the tracked, depth-guarded `vendor/braces` source
+through a root npm override until upstream publishes a verified fix for
+GHSA-vfj7-8cjw-p6xm. The local fork is not an upstream release. npm's registry
+audit does not validate local source code, so `test:braces` also checks the
+installed resolution, ordinary globs, and reported stack-exhaustion patterns.
 
 `build:static` runs `vinext build --prerender-all --prerender-concurrency 1`.
 It intentionally omits the optional Sites/Cloudflare adapter while bare Node

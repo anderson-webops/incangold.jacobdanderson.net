@@ -5,6 +5,7 @@
   "sortPackageJson": false,
   "ignorePatterns": [
     "package-lock.json",
+    "vendor/braces/**",
     "pnpm-lock.yaml",
     "yarn.lock",
     "bun.lock",

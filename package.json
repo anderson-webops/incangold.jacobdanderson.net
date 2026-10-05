@@ -1,6 +1,6 @@
 {
   "name": "incangold.jacobdanderson.net",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "private": true,
   "engines": {
     "node": "24.18.1",
@@ -17,9 +17,10 @@
     "dev": "vinext dev",
     "build": "vinext build",
     "build:static": "VINEXT_STATIC_BUILD=1 vinext build --prerender-all --prerender-concurrency 1",
-    "check": "npm run format:check && npm run lint && npm run typecheck && npm run verify:native-lock && npm run build && npm run build:static && npm run test:static",
+    "check": "npm run format:check && npm run lint && npm run typecheck && npm run verify:native-lock && npm run test:braces && npm run build && npm run build:static && npm run test:static",
     "typecheck": "tsc --noEmit",
     "test:static": "node --test tests/static-build.test.mjs",
+    "test:braces": "node --test tests/braces.test.mjs",
     "start": "wrangler dev --config dist/server/wrangler.json",
     "lint": "oxlint",
     "format": "oxfmt --write .",
@@ -44,6 +45,7 @@
     "@types/react-dom": "19.3.0",
     "@vitejs/plugin-react": "6.1.1",
     "@vitejs/plugin-rsc": "0.5.35",
+    "braces": "file:vendor/braces",
     "oxfmt": "0.70.0",
     "oxlint": "1.85.0",
     "oxlint-tsgolint": "7.0.2002",
@@ -51,6 +53,9 @@
     "typescript": "5.9.3",
     "vite": "8.3.0",
     "wrangler": "4.146.0"
+  },
+  "overrides": {
+    "braces": "$braces"
   },
   "type": "module"
 }
