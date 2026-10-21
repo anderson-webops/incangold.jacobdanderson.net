@@ -88,11 +88,8 @@ export default function Home() {
     <main className="min-h-screen px-5 py-10 sm:px-8 sm:py-14">
       <div className="mx-auto w-full max-w-5xl">
         <header className="mb-8 border-l-2 border-gold pl-5 sm:mb-10 sm:pl-7">
-          <p className="mb-2 text-sm font-semibold uppercase tracking-[0.18em] text-forest/65">
-            Incan Gold simulation
-          </p>
           <h1 className="font-heading text-[clamp(2.25rem,6vw,4.6rem)] font-semibold leading-[0.95] tracking-[-0.045em] text-forest">
-            Strategy results
+            Incan Gold strategy results
           </h1>
         </header>
 
@@ -135,27 +132,14 @@ export default function Home() {
           </div>
         </section>
 
-        <section aria-labelledby="ranking-heading" className="mt-10 sm:mt-14">
-          <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
-            <div>
-              <h2
-                id="ranking-heading"
-                className="font-heading text-3xl font-semibold tracking-[-0.025em] text-forest"
-              >
-                Final ranking
-              </h2>
-              <p className="mt-1 text-base text-ink-muted">
-                The ten finalists, ordered by average score.
-              </p>
-            </div>
-            <p className="rounded-full border border-forest/10 bg-white/55 px-3 py-1.5 text-sm font-medium text-forest/70">
-              50,000 games per finalist
-            </p>
-          </div>
+        <section aria-labelledby="ranking-caption" className="mt-10 sm:mt-14">
+          <p className="mb-5 w-fit rounded-full border border-forest/10 bg-white/55 px-3 py-1.5 text-sm font-medium text-forest/70">
+            50,000 games per finalist
+          </p>
 
           <div className="overflow-hidden rounded-2xl border border-forest/10 bg-white/75 shadow-[0_12px_35px_rgba(10,48,39,0.07)]">
             <Table className="min-w-[700px] text-[0.9375rem]">
-              <TableCaption className="sr-only">
+              <TableCaption id="ranking-caption" className="sr-only">
                 Final ranking of the ten Incan Gold strategy finalists
               </TableCaption>
               <TableHeader className="bg-forest/[0.045]">
@@ -209,10 +193,7 @@ export default function Home() {
           </div>
         </section>
 
-        <aside className="mt-8 grid gap-4 rounded-2xl border border-forest/10 bg-cream-deep/65 p-5 text-sm leading-6 text-ink-muted sm:grid-cols-[auto_1fr] sm:gap-6 sm:p-6">
-          <p className="font-semibold uppercase tracking-[0.14em] text-forest">
-            About the run
-          </p>
+        <aside className="mt-8 rounded-2xl border border-forest/10 bg-cream-deep/65 p-5 text-sm leading-6 text-ink-muted sm:p-6">
           <p>
             112 strategies were screened under four-player homogeneous
             self-play. The final evaluation used 10 paired batches of 5,000
