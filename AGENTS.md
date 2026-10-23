@@ -1,14 +1,14 @@
 # Repository Instructions
 
-## GitGuardian Availability
+Shared Sites policy (`../AGENTS.md` when available) applies. These essentials also apply in standalone checkouts:
+- Never SSH, SCP, SFTP, tunnel to, or configure access to production. Do not deploy it; protected server-side automation owns activation, and source delivery alone does not prove deployment.
+- GitGuardian quota, authentication, network, or service failure is not a commit/push blocker. Review outgoing changes, run another available local secret scan, preserve other hooks, and stop on real secret findings.
+- Commit small, coherent, validated changes frequently as work progresses and push completed work through this repository's authorized source path, usually its default branch; use pull requests only when required.
+- Group related changes into meaningful deployable milestones. Align version metadata, create a new immutable annotated semver tag, and publish its matching verified GitHub release with the required accepted artifacts.
+- Complete finished deployable work through the published release consumed by protected deployment. Independently verify public release identity and acceptance read-only, or report the exact remaining blocker. Never move published tags or replace published release assets.
 
-- Use GitGuardian/`ggshield` when available. Quota, authentication, network, or service failures are not commit or push blockers. Record the scan as unavailable, review staged and outgoing changes, run an available independent local secret scan, and proceed with the other required checks. Never ignore a confirmed secret finding or claim a failed scan passed.
-- If only the global GitGuardian hook blocks delivery, inspect it for other checks, then use a command-scoped `core.hooksPath` pointing to the repository's own hooks for that commit or push. Do not disable hooks globally or skip unrelated checks.
+## Site and Validation
 
-## Direct Delivery and Pull Requests
-
-- After a coherent change set passes the repository's required checks, default to committing it and pushing it directly to the repository's default branch. Do not open a pull request unless the user explicitly asks for one, branch protection requires it, or an external-contribution policy makes direct integration inappropriate.
-- For a release-worthy application change, update the project version as required, create an annotated tag, and publish or update the corresponding GitHub release in the same work session. Keep documentation-only, formatting-only, and other non-deployable housekeeping changes as committed and pushed source changes without inventing an application release.
-- Never force-push a shared branch or move an existing published tag unless the user explicitly authorizes that exact history rewrite.
-- If automation or repository policy creates a pull request, review it, wait for required checks, merge it when safe, and remove the merged branch before wrapping up. Do not leave redundant pull requests or branches open.
-- Treat commit, push, tag, and GitHub release publication as source delivery only. Do not claim or perform production deployment unless it was separately authorized and verified.
+- This is a static Incan Gold results page. Preserve all ten strategy rows and the no-client-JavaScript, `script-src 'none'` production contract. Do not introduce a resident Node or Cloudflare runtime to serve it.
+- Use the pinned Node/npm versions, `npm ci --ignore-scripts`, `npm run check`, and `npm run audit:security` for application or dependency changes. `npm run build:static` and its tests verify the prerendered routes, native lock entries, and absence of client bundles. Keep the optional Sites adapter separate from the static production artifact.
+- The reviewed local `vendor/braces` override is a source-level security fix, not an upstream release. Preserve its regression tests until a compatible upstream replacement is independently validated.
