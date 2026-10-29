@@ -37,15 +37,32 @@ test('the Vinext build chain resolves the guarded source package', async () => {
   );
   assert.ok(lock.packages['node_modules/fast-glob']?.dependencies?.micromatch);
   assert.ok(lock.packages['node_modules/micromatch']?.dependencies?.braces);
-  assert.equal(installed.version, '3.0.4-webops.1');
+  assert.equal(installed.version, '3.0.4-webops.2');
   assert.equal(lock.packages['node_modules/braces']?.resolved, 'vendor/braces');
   assert.equal(lock.packages['node_modules/braces']?.link, true);
-  assert.equal(lock.packages['vendor/braces']?.version, '3.0.4-webops.1');
+  assert.equal(lock.packages['vendor/braces']?.version, '3.0.4-webops.2');
   assert.ok(
     !Object.keys(lock.packages).some(
       (path) =>
         path.endsWith('/braces') && lock.packages[path]?.version === '3.0.3',
     ),
+  );
+});
+
+test('shallow expansions share bounded item and byte budgets', () => {
+  const { braces } = buildChain();
+  assert.equal(braces.expand('{a,b}'.repeat(12)).length, 4096);
+  assert.throws(
+    () => braces.expand('{a,b}'.repeat(14)),
+    /cumulative output budget/u,
+  );
+  assert.throws(
+    () => braces.expand(`${'{a,b}'.repeat(9)}${'x'.repeat(2100)}`),
+    /cumulative output budget/u,
+  );
+  assert.throws(
+    () => braces.expand('{1..50000}', { rangeLimit: false }),
+    /range limit/u,
   );
 });
 
