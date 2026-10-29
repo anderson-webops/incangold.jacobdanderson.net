@@ -32,6 +32,7 @@ a published release from verified live deployment.
 Treat this as a standing instruction for this site.
 
 Shared Sites policy (`../AGENTS.md` when available) applies. These essentials also apply in standalone checkouts:
+
 - Never SSH, SCP, SFTP, tunnel to, or configure access to production. Do not deploy it; protected server-side automation owns activation, and source delivery alone does not prove deployment.
 - GitGuardian quota, authentication, network, or service failure is not a commit/push blocker. Review outgoing changes, run another available local secret scan, preserve other hooks, and stop on real secret findings.
 - Commit small, coherent, validated changes frequently as work progresses and push completed work through this repository's authorized source path, usually its default branch; use pull requests only when required.

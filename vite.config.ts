@@ -61,6 +61,11 @@ export default defineConfig(async () => {
     server: isCodexSeatbeltSandbox
       ? { watch: { useFsEvents: false, usePolling: true } }
       : undefined,
-    plugins: [vinext(), ...adapterPlugins],
+    plugins: [
+      vinext({
+        prerender: isStaticBuild ? { routes: '*', concurrency: 1 } : undefined,
+      }),
+      ...adapterPlugins,
+    ],
   };
 });

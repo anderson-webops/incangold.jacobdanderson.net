@@ -8,7 +8,7 @@ The results come from the [Incan Gold Strategy Tester](https://github.com/Jacoba
 
 ## Development
 
-Use Node **24.18.1** and npm **12.0.2** (the runtime pins are committed).
+Use Node **24.22.1** and npm **12.2.1** (the runtime pins are committed).
 
 ```sh
 npm ci --ignore-scripts
@@ -28,7 +28,7 @@ GHSA-vfj7-8cjw-p6xm. The local fork is not an upstream release. npm's registry
 audit does not validate local source code, so `test:braces` also checks the
 installed resolution, ordinary globs, and reported stack-exhaustion patterns.
 
-`build:static` runs `vinext build --prerender-all --prerender-concurrency 1`.
+`build:static` runs `vite build` with all-route prerendering and concurrency one configured in `vite.config.ts`.
 It intentionally omits the optional Sites/Cloudflare adapter while bare Node
 performs the prerender. This keeps workerd-only `cloudflare:` modules out of
 the static build without removing the separately tested adapter build.

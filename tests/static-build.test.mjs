@@ -1,9 +1,30 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { posix } from 'node:path';
 import test from 'node:test';
 
 const root = new URL('../', import.meta.url);
 const read = (path) => readFile(new URL(path, root), 'utf8');
+
+function frameworkClientEntry(source, file, referenceSources) {
+  const frameworkSource = (value) =>
+    value.startsWith('node_modules/vinext/') &&
+    posix.normalize(value) === value;
+  if (!Object.keys(referenceSources).every(frameworkSource)) return false;
+  if (frameworkSource(source)) return true;
+  if (
+    [
+      'virtual:vinext-app-browser-entry',
+      'virtual:vinext-app-route-manifest',
+      'virtual:vinext-client-reference-chunks',
+    ].includes(source)
+  )
+    return true;
+  return (
+    source.startsWith('virtual:vinext-client-reference-module/') &&
+    Object.values(referenceSources).includes(file)
+  );
+}
 
 // Inspect the HTML already rendered by the build, without running framework
 // scripts. The production host serves this content with script-src 'none'.
@@ -95,19 +116,56 @@ test('404 is prerendered without relying on a running application', async () => 
 
 test('the client build has no application or third-party UI entry points', async () => {
   const manifest = JSON.parse(await read('dist/client/.vite/manifest.json'));
-  const sources = Object.values(manifest).flatMap((entry) =>
-    entry.src ? [entry.src] : [],
+  const referenceSources = JSON.parse(
+    await read('dist/client/.vite/vinext-client-reference-sources.json'),
   );
-  assert.ok(sources.length > 0, 'client manifest was generated');
+  const entries = Object.values(manifest).filter((entry) => entry.src);
+  assert.ok(entries.length > 0, 'client manifest was generated');
   // Vinext emits framework bootstrapping even for static routes. Any application
   // or UI-library entry here reintroduces hydration into the no-JavaScript site.
-  for (const source of sources) {
+  for (const entry of entries) {
     assert.ok(
-      source === 'virtual:vinext-app-browser-entry' ||
-        source.startsWith('node_modules/vinext/'),
-      `unexpected client module: ${source}`,
+      frameworkClientEntry(entry.src, entry.file, referenceSources),
+      `unexpected client module: ${entry.src}`,
     );
   }
+});
+
+test('framework metadata cannot admit application or third-party client code', () => {
+  const references = {
+    'node_modules/vinext/dist/shims/layout-segment-context.js': 'framework.js',
+  };
+  assert.equal(
+    frameworkClientEntry(
+      'virtual:vinext-client-reference-module/layout',
+      'framework.js',
+      references,
+    ),
+    true,
+  );
+  for (const source of [
+    'app/page.tsx',
+    'node_modules/react-icons/fi/index.js',
+    'node_modules/vinext/../react/index.js',
+    'virtual:vinext-app-route-manifest-application',
+  ])
+    assert.equal(frameworkClientEntry(source, 'app.js', references), false);
+  assert.equal(
+    frameworkClientEntry(
+      'virtual:vinext-client-reference-module/widget',
+      'app.js',
+      references,
+    ),
+    false,
+  );
+  assert.equal(
+    frameworkClientEntry(
+      'virtual:vinext-client-reference-chunks',
+      'bundle.js',
+      { 'app/widget.tsx': 'app.js' },
+    ),
+    false,
+  );
 });
 
 test('the static prerender bundle is independent of the optional worker runtime', async () => {

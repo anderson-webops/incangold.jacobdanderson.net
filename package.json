@@ -1,26 +1,27 @@
 {
   "name": "incangold.jacobdanderson.net",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "private": true,
   "engines": {
-    "node": "24.18.1",
-    "npm": "12.0.2"
+    "node": "24.22.1",
+    "npm": "12.2.1"
   },
-  "packageManager": "npm@12.0.2",
+  "packageManager": "npm@12.2.1",
   "allowScripts": {
     "esbuild@0.28.2": false,
     "fsevents@2.3.3": false,
-    "workerd@1.20261012.1": false
+    "workerd@1.20261023.1": false
   },
   "scripts": {
     "audit:security": "npm audit --audit-level=low && npm audit --omit=dev --audit-level=low && npm audit signatures",
     "dev": "vinext dev",
-    "build": "vinext build",
-    "build:static": "VINEXT_STATIC_BUILD=1 vinext build --prerender-all --prerender-concurrency 1",
-    "check": "npm run format:check && npm run lint && npm run typecheck && npm run verify:native-lock && npm run test:braces && npm run build && npm run build:static && npm run test:static",
+    "build": "vite build",
+    "build:static": "VINEXT_STATIC_BUILD=1 vite build",
+    "check": "npm run format:check && npm run lint && npm run typecheck && npm run verify:native-lock && npm run test:braces && npm run test:dependency-patches && npm run build && npm run build:static && npm run test:static",
     "typecheck": "tsc --noEmit",
     "test:static": "node --test tests/static-build.test.mjs",
     "test:braces": "node --test tests/braces.test.mjs",
+    "test:dependency-patches": "node --test tests/dependency-patches.test.mjs",
     "start": "wrangler dev --config dist/server/wrangler.json",
     "lint": "oxlint",
     "format": "oxfmt --write .",
@@ -33,11 +34,11 @@
     "react-dom": "19.3.1",
     "react-server-dom-webpack": "19.3.1",
     "tailwind-merge": "3.7.0",
-    "vinext": "1.3.0"
+    "vinext": "1.4.0"
   },
   "devDependencies": {
-    "@cloudflare/vite-plugin": "1.65.0",
-    "@cloudflare/workers-types": "5.20261023.1",
+    "@cloudflare/vite-plugin": "1.66.0",
+    "@cloudflare/workers-types": "5.20261029.1",
     "@openai/sites-vite-plugin": "0.2.0",
     "@tailwindcss/postcss": "4.3.3",
     "@types/node": "24.19.2",
@@ -46,16 +47,25 @@
     "@vitejs/plugin-react": "6.1.2",
     "@vitejs/plugin-rsc": "0.5.38",
     "braces": "file:vendor/braces",
-    "oxfmt": "0.74.0",
-    "oxlint": "1.89.0",
+    "oxfmt": "0.75.0",
+    "oxlint": "1.90.0",
     "oxlint-tsgolint": "7.0.2005",
     "tailwindcss": "4.3.3",
-    "typescript": "5.9.3",
+    "typescript": "7.0.2",
     "vite": "8.3.5",
-    "wrangler": "4.152.0"
+    "wrangler": "4.155.0"
   },
   "overrides": {
-    "braces": "$braces"
+    "braces": "$braces",
+    "ajv": {
+      "fast-uri": "3.1.9"
+    },
+    "satori": {
+      "fflate": "0.7.5"
+    },
+    "@shuding/opentype.js": {
+      "fflate": "0.7.5"
+    }
   },
   "type": "module"
 }
