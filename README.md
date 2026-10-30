@@ -8,7 +8,7 @@ The results come from the [Incan Gold Strategy Tester](https://github.com/Jacoba
 
 ## Development
 
-Use Node **24.22.1** and npm **12.2.1** (the runtime pins are committed).
+Use Node **26.13.0** and npm **12.2.1** (the build-toolchain pins are committed).
 
 ```sh
 npm ci --ignore-scripts
