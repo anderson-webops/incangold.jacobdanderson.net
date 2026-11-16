@@ -1,23 +1,24 @@
 {
   "name": "incangold.jacobdanderson.net",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "private": true,
   "engines": {
-    "node": "26.13.0",
-    "npm": "12.2.1"
+    "node": "26.13.1",
+    "npm": "12.2.2"
   },
-  "packageManager": "npm@12.2.1",
+  "packageManager": "npm@12.2.2",
   "allowScripts": {
     "esbuild@0.28.2": false,
     "fsevents@2.3.3": false,
-    "workerd@1.20261023.1": false
+    "workerd@1.20261110.1": false,
+    "workerd@1.20261113.1": false
   },
   "scripts": {
-    "audit:security": "npm audit --audit-level=low && npm audit --omit=dev --audit-level=low && npm audit signatures",
+    "audit:security": "node scripts/build-tools.mjs --audit && node scripts/build-tools.mjs --audit-production && node scripts/build-tools.mjs --audit-signatures && npm audit --audit-level=low && npm audit --omit=dev --audit-level=low && npm audit signatures",
     "dev": "vinext dev",
     "build": "vite build",
     "build:static": "VINEXT_STATIC_BUILD=1 vite build",
-    "check": "npm run format:check && npm run lint && npm run typecheck && npm run verify:native-lock && npm run test:braces && npm run test:dependency-patches && npm run build && npm run build:static && npm run test:static",
+    "check": "node scripts/build-tools.mjs --check && npm run format:check && npm run lint && npm run typecheck && npm run verify:native-lock && npm run test:braces && npm run test:dependency-patches && npm run build && npm run build:static && npm run test:static",
     "typecheck": "tsc --noEmit",
     "test:static": "node --test tests/static-build.test.mjs",
     "test:braces": "node --test tests/braces.test.mjs",
@@ -34,11 +35,11 @@
     "react-dom": "19.3.1",
     "react-server-dom-webpack": "19.3.1",
     "tailwind-merge": "3.7.0",
-    "vinext": "1.4.4"
+    "vinext": "1.4.5"
   },
   "devDependencies": {
-    "@cloudflare/vite-plugin": "1.69.0",
-    "@cloudflare/workers-types": "5.20261110.1",
+    "@cloudflare/vite-plugin": "1.69.1",
+    "@cloudflare/workers-types": "5.20261116.1",
     "@openai/sites-vite-plugin": "0.2.0",
     "@tailwindcss/postcss": "4.3.5",
     "@types/node": "26.6.6",
@@ -49,21 +50,15 @@
     "braces": "file:vendor/braces",
     "oxfmt": "0.78.0",
     "oxlint": "1.93.0",
-    "oxlint-tsgolint": "7.0.2006",
+    "oxlint-tsgolint": "7.0.2007",
     "tailwindcss": "4.3.5",
     "typescript": "7.0.2",
     "vite": "8.3.8",
-    "wrangler": "4.160.1"
+    "wrangler": "4.162.0"
   },
   "overrides": {
     "braces": "$braces",
-    "ajv": {
-      "fast-uri": "3.1.9"
-    },
     "satori": {
-      "fflate": "0.7.5"
-    },
-    "@shuding/opentype.js": {
       "fflate": "0.7.5"
     }
   },

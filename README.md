@@ -8,9 +8,10 @@ The results come from the [Incan Gold Strategy Tester](https://github.com/Jacoba
 
 ## Development
 
-Use Node **26.13.0** and npm **12.2.1** (the build-toolchain pins are committed).
+Use Node **26.13.1** and the reviewed build-only npm **12.2.2** profile.
 
 ```sh
+export PATH="$(node scripts/build-tools.mjs --print-bin):$PATH"
 npm ci --ignore-scripts
 npm run dev
 ```
@@ -21,6 +22,16 @@ Run the project checks with:
 npm run check
 npm run audit:security
 ```
+
+The shared build tools retain their exact reviewed canonical bytes and license
+under `vendor/webops-build-tools`. Integrity checks reject changed or additional
+inputs before execution. Their independent dependency graphs receive full and
+production audits; installed registry packages also receive signature audits.
+Original-library archives retain their verified source hashes. A compatible `NPM_CONFIG_CACHE` can reuse the
+bounded shared installation; the default stays inside this repository's ignored
+`.ai-work/runs` area. These tools are build-only and are excluded from static
+publication. Original vendored source uses hash verification rather than the
+application formatter; editable project code retains its existing checks.
 
 The Vinext build chain uses the tracked, depth-guarded `vendor/braces` source
 through a root npm override until upstream publishes a verified fix for

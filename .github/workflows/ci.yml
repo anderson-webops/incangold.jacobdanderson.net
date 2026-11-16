@@ -24,13 +24,20 @@ jobs:
     steps:
       - name: Check out source
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - name: Set up Node
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version-file: .node-version
           cache: npm
-      - name: Pin npm
-        run: npm install --global npm@12.2.1
+      - name: Prepare reviewed build-only tools
+        run: |
+          printf '/.ai-work/\n' >> "$(git rev-parse --git-path info/exclude)"
+          bin="$(node scripts/build-tools.mjs --print-bin)"
+          printf '%s\n' "$bin" >> "$GITHUB_PATH"
+      - name: Verify selected build tools
+        run: node scripts/build-tools.mjs --check
       - name: Install locked dependencies
         run: npm ci --ignore-scripts
       - name: Audit dependency graph

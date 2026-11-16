@@ -45,3 +45,12 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+## Shared build-only tools
+
+`vendor/webops-build-tools` retains the reviewed source from
+`anderson-webops/vitesse-nuxt-template` at commit
+`a4dd6f9fcce9bec4275c688d165b993cb7b5ef22`. Its MIT license is retained in that
+directory. npm and its upstream-library source archives retain their original
+licenses and source identities. These inputs support builds and are excluded
+from the static publication tree.

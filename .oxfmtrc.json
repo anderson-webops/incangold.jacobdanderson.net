@@ -6,6 +6,7 @@
   "ignorePatterns": [
     "package-lock.json",
     "vendor/braces/**",
+    "vendor/webops-build-tools/**",
     "pnpm-lock.yaml",
     "yarn.lock",
     "bun.lock",
