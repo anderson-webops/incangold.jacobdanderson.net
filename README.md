@@ -8,7 +8,8 @@ The results come from the [Incan Gold Strategy Tester](https://github.com/Jacoba
 
 ## Development
 
-Use Node **26.13.1** and the reviewed build-only npm **12.2.2** profile.
+Use Node **26.13.1**, Python 3 with descriptor-relative file access, and the
+reviewed build-only npm **12.2.2** profile.
 
 ```sh
 export PATH="$(node scripts/build-tools.mjs --print-bin):$PATH"

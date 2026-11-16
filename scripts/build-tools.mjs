@@ -3,10 +3,8 @@ import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import {
   existsSync,
-  lstatSync,
   readFileSync,
   readdirSync,
-  realpathSync,
 } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -15,16 +13,15 @@ const repository = fileURLToPath(new URL('../', import.meta.url));
 const vendor = path.join(repository, 'vendor/webops-build-tools');
 
 function regularBytes(filename) {
-  assert.ok(
-    lstatSync(filename).isFile(),
-    `Build input must be regular: ${filename}`,
-  );
-  assert.equal(
-    realpathSync(filename),
-    filename,
-    `Build input must not use links: ${filename}`,
-  );
-  return readFileSync(filename);
+  const reader = path.join(repository, 'scripts/read-build-input.py');
+  const result = spawnSync('python3', ['-I', '-B', reader, filename], {
+    maxBuffer: 8 * 1024 * 1024 + 32_768,
+    timeout: 30_000,
+  });
+  assert.ifError(result.error);
+  assert.equal(result.signal, null, 'Build input read was interrupted');
+  assert.equal(result.status, 0, result.stderr.toString('utf8'));
+  return result.stdout;
 }
 
 export function verifyVendoredInputs(directory = vendor) {

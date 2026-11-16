@@ -41,6 +41,14 @@ test('build tools reject changed or undeclared vendored inputs', () => {
       /Vendored build input differs/,
     );
     copyFileSync(join(original, filename), join(copied, filename));
+    const readerTests = join(repository, 'scripts/test_build_input.py');
+    const reader = spawnSync('python3', ['-I', '-B', readerTests], {
+      encoding: 'utf8',
+      timeout: 30_000,
+    });
+    assert.ifError(reader.error);
+    assert.equal(reader.signal, null);
+    assert.equal(reader.status, 0, reader.stderr);
     writeFileSync(join(copied, 'undeclared.mjs'), 'extra fixture');
     assert.throws(
       () => verifyVendoredInputs(copied),
