@@ -31,6 +31,8 @@ jobs:
         with:
           node-version-file: .node-version
           cache: npm
+      - name: Isolate the pinned Node executable
+        run: bash scripts/prepare-github-node.sh
       - name: Prepare reviewed build-only tools
         run: |
           printf '/.ai-work/\n' >> "$(git rev-parse --git-path info/exclude)"
